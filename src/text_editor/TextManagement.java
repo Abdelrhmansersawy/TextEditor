@@ -1,4 +1,6 @@
 package text_editor;
+import text_editor.rope.Text;
+
 import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
@@ -118,16 +120,7 @@ public class TextManagement  implements KeyListener{
     public void alert(String message, String title){
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
-    @Override
-    public void keyTyped(KeyEvent e) {
-        // This method is called when a key is typed (pressed and released)
-        char x = e.getKeyChar();
-        System.out.println((int)x);
-        if(x == ' ') {
-            undoStack.push(textArea.getText());
-            if (auto_save) auto_save();
-        }
-    }
+
     void undo(){
         if(undoStack.size() == 1) return;
         undoStack.pop();
@@ -147,8 +140,15 @@ public class TextManagement  implements KeyListener{
         }
     }
     @Override
+
+    public void keyTyped(KeyEvent e) {}
+    @Override
     public void keyPressed(KeyEvent e) {}
 
     @Override
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+        // This method is called when a key is typed (pressed and released)
+        char x = e.getKeyChar();
+        System.out.println(x + " " + textArea.getText().length());
+    }
 }
