@@ -1,7 +1,7 @@
 package text_editor.rope;
 import java.util.Random;
 public class Treap_impl {
-    static final Random rand=new Random(5);
+    static final Random rand = new Random(5);
     static class Treap {
         int priority;
         char data;

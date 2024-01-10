@@ -17,13 +17,15 @@ public class TextManagement  implements KeyListener{
     JTextArea textArea;
     DefaultHighlighter highlighter;
     JScrollPane scrollPane;
-    String text, path, title;
+    String path, title;
+    Text text;
+    //Text
     boolean is_saved, auto_save;
     Deque<String> undoStack = new LinkedList<>();
     public TextManagement(){
         is_saved = false;
         auto_save = false;
-        text = "";
+        text = new Text();
         title = "New file";
         setTextArea();
     }
@@ -77,6 +79,10 @@ public class TextManagement  implements KeyListener{
             e.printStackTrace();
         }
     }
+    public void undo(){
+        text.undo();
+        textArea.setText(text.to_string());
+    }
     public boolean open(){
         fileChooser = new JFileChooser(FileSystemView.getFileSystemView());
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files", "txt", "cpp", "java");
@@ -102,8 +108,8 @@ public class TextManagement  implements KeyListener{
                         content.append(line);
                     }
                 }
-                text = content.toString();
-                textArea.setText(text);
+                textArea.setText(content.toString());
+                text = new Text(content.toString());
             } catch (FileNotFoundException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
@@ -121,11 +127,7 @@ public class TextManagement  implements KeyListener{
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
-    void undo(){
-        if(undoStack.size() == 1) return;
-        undoStack.pop();
-        textArea.setText(undoStack.peek());
-    }
+
     void find(){
         String word = JOptionPane.showInputDialog(null, "Enter something:");
         if (word != null) {
@@ -140,15 +142,15 @@ public class TextManagement  implements KeyListener{
         }
     }
     @Override
+    public void keyTyped(KeyEvent e) {
+        text.action(e.getKeyChar(),textArea.getCaretPosition());
+        if(auto_save) auto_save(); // auto save the file
 
-    public void keyTyped(KeyEvent e) {}
+    }
     @Override
     public void keyPressed(KeyEvent e) {}
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // This method is called when a key is typed (pressed and released)
-        char x = e.getKeyChar();
-        System.out.println(x + " " + textArea.getText().length());
     }
 }
