@@ -8,7 +8,8 @@ public class GUI implements ActionListener{
     JMenuBar menuBar;
     JMenu menuFile, menuEdit;
     JTabbedPane tabbedPane;
-    JMenuItem newFileItem, openFileItem, saveFileItem, saveAsFileItem, undoItem, findItem;
+    JMenuItem newFileItem, openFileItem, saveFileItem, saveAsFileItem; // File section items
+    JMenuItem undoItem, findItem, cutItem, copyItem, pasteItem; // Edit section items
     TextManagement file;
     public GUI(){
         this.setWindow();
@@ -51,15 +52,26 @@ public class GUI implements ActionListener{
     void setMenuEdit(){
         menuEdit = new JMenu("Edit");
         menuBar.add(menuEdit);
-        // new file item
+        // Undo item
         undoItem = new JMenuItem("undo");
         menuEdit.add(undoItem);
         undoItem.addActionListener(this);
-        // new file item
+        // Cut
+        cutItem = new JMenuItem("cut");
+        menuEdit.add(cutItem);
+        cutItem.addActionListener(this);
+        // Copy
+        copyItem = new JMenuItem("copy");
+        menuEdit.add(copyItem);
+        copyItem.addActionListener(this);
+        // Paste
+        pasteItem = new JMenuItem("paste");
+        menuEdit.add(pasteItem);
+        pasteItem.addActionListener(this);
+        // Find item
         findItem = new JMenuItem("find");
         menuEdit.add(findItem);
         findItem.addActionListener(this);
-
     }
     void setMenuBar(){
         menuBar = new JMenuBar();

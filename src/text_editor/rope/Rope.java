@@ -31,8 +31,15 @@ public class Rope extends Treap_impl {
     public  void  delete(int pos){
         delete(pos,pos + 1);
     }
+    public String to_string(int l , int r){
+        // l inclusive, r exclusive
+        String ans = Treap.to_string(root, 0, l , r);
+        // System.out.println("String is " + ans);
+        return ans;
+    };
     public String to_string(){
         return Treap.to_string(root);
     };
+    public int length(){ return Treap.size(root); }
 
 }

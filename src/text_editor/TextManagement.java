@@ -21,7 +21,6 @@ public class TextManagement  implements KeyListener{
     Text text;
     //Text
     boolean is_saved, auto_save;
-    Deque<String> undoStack = new LinkedList<>();
     public TextManagement(){
         is_saved = false;
         auto_save = false;
@@ -36,7 +35,6 @@ public class TextManagement  implements KeyListener{
         highlighter = (DefaultHighlighter) textArea.getHighlighter();
         highlighter.setDrawsLayeredHighlights(false);
         textArea.addKeyListener(this);
-        undoStack.push("");
         setFont();
     }
     void setFont(){
@@ -127,7 +125,6 @@ public class TextManagement  implements KeyListener{
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
-
     void find(){
         String word = JOptionPane.showInputDialog(null, "Enter something:");
         if (word != null) {
@@ -143,9 +140,12 @@ public class TextManagement  implements KeyListener{
     }
     @Override
     public void keyTyped(KeyEvent e) {
-        text.action(e.getKeyChar(),textArea.getCaretPosition());
+        int start_selection = textArea.getSelectionStart();
+        int end_selection = textArea.getSelectionEnd();
+        int cursor_pos = textArea.getCaretPosition();
+        char typed_char = e.getKeyChar();
+        text.changeAction(typed_char, cursor_pos, start_selection,end_selection);
         if(auto_save) auto_save(); // auto save the file
-
     }
     @Override
     public void keyPressed(KeyEvent e) {}

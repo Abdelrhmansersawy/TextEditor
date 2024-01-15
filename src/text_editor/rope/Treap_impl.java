@@ -7,7 +7,7 @@ public class Treap_impl {
         char data;
         Treap[] kids=new Treap[2];
 
-        int subtreeSize, sum, toProp;
+        int subtreeSize;
 
         public Treap(char data) {
             this.data=data;
@@ -49,7 +49,6 @@ public class Treap_impl {
         static void recalc(Treap me) {
             if (me==null) return;
             me.subtreeSize=1;
-            me.sum=me.data+me.toProp*size(me);
             for (Treap t:me.kids) if (t!=null) me.subtreeSize+=t.subtreeSize;
         }
         static int size(Treap t) {
@@ -58,6 +57,16 @@ public class Treap_impl {
         static  String to_string(Treap me){
             if(me == null) return "";
             return to_string(me.kids[0]) + me.data + to_string(me.kids[1]);
+        }
+        static String to_string(Treap me, int offset, int lx , int rx){
+            if(me == null) return "";
+            int l = offset, r = offset + me.subtreeSize;
+            if(r < lx || l >= rx) return "";
+            String ans = to_string(me.kids[0],offset,lx , rx);
+            int idx = offset + size(me.kids[0]);
+            if(idx >= lx && idx < rx) ans += String.valueOf(me.data);
+            ans += to_string(me.kids[1],offset + size(me.kids[0]),lx, rx);
+            return ans;
         }
     }
 }
