@@ -87,14 +87,23 @@ public class GUI implements ActionListener{
             TextManagement tmp = new TextManagement();
             boolean is_opened = tmp.open();
             if(is_opened){
-                 tabbedPane.add("Tab 2", tmp.textArea); // under developing
+                tabbedPane.remove(0);
+                file = tmp;
+                tabbedPane.add("Tab 1", file.textArea);
+                window.setVisible(true);
             }
+            // add in the new tab
         }else if(e.getSource() == undoItem){
             file.undo();
         }else if(e.getSource() == saveAsFileItem){
             file.save();
         }else if(e.getSource() == findItem){
             file.find();
+        } else if (e.getSource() == newFileItem) {
+            tabbedPane.remove(0);
+            file = new TextManagement();
+            tabbedPane.add("Tab 1", file.textArea);
+            window.setVisible(true);
         }
     }
 }

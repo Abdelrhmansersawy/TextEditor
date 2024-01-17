@@ -21,20 +21,22 @@ public class Rope extends Treap_impl {
     }
     public void delete(int l , int r){
         assert(l >= 0);
-        Treap[] halves = Treap.split(root, r);
-        root = halves[0];
-        // delete halves[1] with destructor
-        halves = Treap.split(root,l);
-        root = halves[0];
-        // delete halves[1] destructor
+        Treap[] halves1 = Treap.split(root, r);
+        Treap[] halves2 = Treap.split(halves1[0], l);
+        root = Treap.merge(halves2[0] , halves1[1]);
     }
     public  void  delete(int pos){
         delete(pos,pos + 1);
     }
     public String to_string(int l , int r){
         // l inclusive, r exclusive
-        String ans = Treap.to_string(root, 0, l , r);
-        // System.out.println("String is " + ans);
+        // Spilt
+        Treap[] halves1 = Treap.split(root, r);
+        Treap[] halves2 = Treap.split(halves1[0] , l);
+        String ans = Treap.to_string(halves2[1]);
+        // Merge
+        root = Treap.merge(halves2[0], halves2[1]);
+        root = Treap.merge(root,halves1[1]);
         return ans;
     };
     public String to_string(){

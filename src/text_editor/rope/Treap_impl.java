@@ -58,15 +58,6 @@ public class Treap_impl {
             if(me == null) return "";
             return to_string(me.kids[0]) + me.data + to_string(me.kids[1]);
         }
-        static String to_string(Treap me, int offset, int lx , int rx){
-            if(me == null) return "";
-            int l = offset, r = offset + me.subtreeSize;
-            if(r < lx || l >= rx) return "";
-            String ans = to_string(me.kids[0],offset,lx , rx);
-            int idx = offset + size(me.kids[0]);
-            if(idx >= lx && idx < rx) ans += String.valueOf(me.data);
-            ans += to_string(me.kids[1],offset + size(me.kids[0]),lx, rx);
-            return ans;
-        }
+
     }
 }

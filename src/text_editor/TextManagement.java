@@ -1,4 +1,5 @@
 package text_editor;
+import text_editor.rope.Pair;
 import text_editor.rope.Text;
 
 import java.awt.*;
@@ -51,7 +52,7 @@ public class TextManagement  implements KeyListener{
             path = fileChooser.getSelectedFile().getAbsolutePath(); // save the path of the file
             try {
                 fileOut = new PrintWriter(file);
-                fileOut.println(text);
+                fileOut.println(text.to_string());
             }
             catch (FileNotFoundException e1) {
                 // TODO Auto-generated catch block
@@ -121,6 +122,7 @@ public class TextManagement  implements KeyListener{
         }
         return  false;
     }
+
     public void alert(String message, String title){
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
@@ -128,14 +130,32 @@ public class TextManagement  implements KeyListener{
     void find(){
         String word = JOptionPane.showInputDialog(null, "Enter something:");
         if (word != null) {
-
+            removeHighlight();
+            Vector<Pair<Integer,Integer>> Interval = text.find(word);
+            for(int i = 0; i < Interval.size(); ++i){
+                highlightRange(Interval.get(i).getKey(), Interval.get(i).getValue());
+            }
         }
+    }
+    void findAndReplace(){
+
     }
     public void highlightRange(int start, int end) {
         try {
             highlighter.addHighlight(start, end, DefaultHighlighter.DefaultPainter);
         } catch (BadLocationException e) {
             e.printStackTrace();
+        }
+    }
+    void removeHighlight() {
+        Highlighter highlighter = textArea.getHighlighter();
+        Highlighter.Highlight[] highlights = highlighter.getHighlights();
+
+        for (Highlighter.Highlight highlight : highlights) {
+            if (highlight.getPainter() instanceof DefaultHighlighter.DefaultHighlightPainter) {
+                // Only remove highlights applied by DefaultHighlightPainter
+                highlighter.removeHighlight(highlight);
+            }
         }
     }
     @Override
