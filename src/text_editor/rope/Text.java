@@ -1,4 +1,5 @@
 package text_editor.rope;
+import javax.swing.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -43,6 +44,17 @@ public class Text implements UndoAction{
         }else{
             // copy, paste, cut,selectedAll
         }
+        executeAction(Action);
+    }
+    public void findAction(int l , int r, String word, String replacedWord){
+        undoAction Action = new undoAction();
+        Action.cursorPos = l;
+        Action.action = "add";
+        Action.isSelectedText = true;
+        Action.l = l;
+        Action.r = r;
+        Action.selectedText = word;
+        Action.typedtext = replacedWord;
         executeAction(Action);
     }
     public void executeAction(undoAction Action){

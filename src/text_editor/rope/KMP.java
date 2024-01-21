@@ -5,6 +5,9 @@ import java.util.Vector;
 public class KMP {
     static Vector<Integer> KMPSearch(String pat, String txt)
     {
+        Vector<Integer> positions = new Vector<>();
+
+        if(pat.isEmpty() || txt.isEmpty()) return positions;
         int M = pat.length();
         int N = txt.length();
 
@@ -16,7 +19,6 @@ public class KMP {
         // Preprocess the pattern (calculate lps[]
         // array)
         computeLPSArray(pat, M, lps);
-        Vector<Integer> positions = new Vector<>();
         int i = 0; // index for txt[]
         while ((N - i) >= (M - j)) {
             if (pat.charAt(j) == txt.charAt(i)) {

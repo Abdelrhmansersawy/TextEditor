@@ -127,8 +127,7 @@ public class TextManagement  implements KeyListener{
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
-    void find(){
-        String word = JOptionPane.showInputDialog(null, "Enter something:");
+    void find(String word){
         if (word != null) {
             removeHighlight();
             Vector<Pair<Integer,Integer>> Interval = text.find(word);
@@ -136,8 +135,41 @@ public class TextManagement  implements KeyListener{
                 highlightRange(Interval.get(i).getKey(), Interval.get(i).getValue());
             }
         }
+        Vector<Pair<Integer,Integer>> Interval = text.find(word);
+        for(Pair<Integer,Integer> p : Interval){
+            highlightRange(p.getKey(),p.getValue());
+        }
     }
-    void findAndReplace(){
+    void replace(String pattern, String replacedWord){
+        Vector<Pair<Integer,Integer>> Interval = text.find(pattern);
+        if(Interval.isEmpty()) return;
+        int l = Interval.get(0).getKey() , r = Interval.get(0).getValue();
+        text.findAction(l,r, pattern, replacedWord);
+        textArea.setText(text.to_string());
+    }
+    void replaceAll(String pattern, String replacedWord){
+        Vector<Pair<Integer,Integer>> Interval = text.find(pattern);
+        String curText = text.to_string();
+        StringBuilder newText = new StringBuilder();
+        int i = 0 , j = 0;
+        int n = curText.length(), m = Interval.size();
+        while(i < n && j < m){
+            while (i < n && Interval.get(j).getKey() > i){
+                newText.append(curText.charAt(i));
+                ++i;
+            }
+            newText.append(replacedWord);
+            while(i < n && Interval.get(j).getValue() > i){
+                ++i;
+            }
+            while (j < m && Interval.get(j).getKey() < i) j++;
+        }
+        while (i < n){
+            newText.append(curText.charAt(i));
+            ++i;
+        }
+        text.findAction(0,n, curText, String.valueOf(newText));
+        textArea.setText(text.to_string());
 
     }
     public void highlightRange(int start, int end) {
@@ -172,5 +204,6 @@ public class TextManagement  implements KeyListener{
 
     @Override
     public void keyReleased(KeyEvent e) {
+
     }
 }
