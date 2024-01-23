@@ -38,7 +38,6 @@ public class Text implements UndoAction{
         Action.selectedText = rope.to_string(start_selection,end_selection + 1);
         if((int) typed_char == 8){
             // remove
-            System.out.println(rope.to_string());
             Action.action = "remove"; // remove-operation
         }else if((int) typed_char >= 32 && (int) typed_char <= 126){
             // add a character

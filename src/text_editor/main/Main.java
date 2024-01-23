@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Main {
+public class Main {v
         public static void main(String[] args) {
                 com.formdev.flatlaf.FlatLightLaf.install();
                 GUI window = new GUI();
