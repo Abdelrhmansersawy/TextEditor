@@ -1,4 +1,4 @@
-package text_editor.rope;
+package text_editor.text;
 
 import java.util.Vector;
 
