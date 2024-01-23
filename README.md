@@ -35,7 +35,6 @@ A GUI plaintext editor written in Java using Swing.
 | `Erase` | *O(n)* | ***O(log(n))*** |
 | `Concat` | *O(m)* | ***O(log(n))*** |
 
--- screenshot .git
 ***
 # find a pattern 
  Used  **KMP string pattern search algorithm** for fast finding a pattern in just *O(n + m)*.
