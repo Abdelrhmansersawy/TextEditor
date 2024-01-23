@@ -1,5 +1,5 @@
 # TextEditor
-A GUI plaintext editor written in Java using Swing.
+A GUI plaintext editor written in Java Swing.
 # Features:
 - Create, open, and save plain text documents
 - Multi tab 
@@ -11,7 +11,8 @@ A GUI plaintext editor written in Java using Swing.
 ## Create, open, and save plain text documents
 - Files can be saved using the **"Open"** menu item and select the desired file using the file chooser dialog. The content of the file will then be loaded into a text area where the user can view and edit the text.
 	![ScreenShot](ScreenShots/openfile.gif)
--  Files can be saved using the **"Save"** menu item. A **file chooser dialog** will appear where the user can specify the name and location to save the file. If the file already exists, it will be **overwritten**. ![[savefile.gif]]
+-  Files can be saved using the **"Save"** menu item. A **file chooser dialog** will appear where the user can specify the name and location to save the file. If the file already exists, it will be **overwritten**.
+ 	![ScreenShot](ScreenShots/savefile.gif)
 ***
 ## Multi Tab 
  ![ScreenShot](ScreenShots/multitab.gif)
