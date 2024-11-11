@@ -8,19 +8,27 @@ A GUI plaintext editor written in Java Swing.
 - find & replace
 - Auto save
 ***
-## Create, open, and save plain text documents
+
+<details>
+<summary> Create, open, and save plain text documents </summary>
 - Files can be saved using the **"Open"** menu item and select the desired file using the file chooser dialog. The content of the file will then be loaded into a text area where the user can view and edit the text.
 	![ScreenShot](ScreenShots/openfile.gif)
 -  Files can be saved using the **"Save"** menu item. A **file chooser dialog** will appear where the user can specify the name and location to save the file. If the file already exists, it will be **overwritten**.
  	![ScreenShot](ScreenShots/savefile.gif)
-***
-## Multi Tab 
+</details>
+
+<details>
+<summary>Multi Tab</summary>
+ 
  ![ScreenShot](ScreenShots/multitab.gif)
 # undo/redo functionality
 - Designed Undo/redo functionality using **command pattern** design pattern.
 ![Architecture](ScreenShots/command_pattern.png)
 - Implemented Undo/redo functionality using **Stack** and **Rope** data structure.
 ![ScreenShot](ScreenShots/undo.gif)
+</details>
+
+---
 
 ## Rope
 [Rope](https://en.wikipedia.org/wiki/Rope_(data_structure)#:~:text=A%20rope%20is%20a%20type,leaves%20in%20its%20left%20subtree.) is a data structure for fast manipulating with large strings. You can fast split rope into two ropes, concatenate two ropes into one, insert another rope or element, get and delete the element at a certain position. And all those operations have ***O(log(n))*** asymptotic.  
@@ -37,7 +45,9 @@ A GUI plaintext editor written in Java Swing.
 | `Concat` | *O(m)* | ***O(log(n))*** |
 
 ***
-# find a pattern 
+
+<details>
+<summary> find a pattern</summary> 
  Used  **KMP string pattern search algorithm** for fast finding a pattern in just *O(n + m)*.
 
  | Operation | Brute force | KMP |
@@ -45,11 +55,17 @@ A GUI plaintext editor written in Java Swing.
 | `search` | ***O(n * m)*** | *O(n+m)* |
 
 ![ScreenShot](ScreenShots/find.gif)
+</details>
 
-***
-# replace & replace All
+<details>
+<summary> replace & replace All </summary>
+
 ![ScreenShot](ScreenShots/replace.gif)
-***
-# Auto Save
+</details>
+
+<details>
+<summary>Auto Save</summary>
 Through keep tracing the changes of the files.
+
 ![ScreenShot](ScreenShots/autoSave.gif)
+</details>
