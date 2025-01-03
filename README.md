@@ -74,7 +74,7 @@ Creating a smart spell-checking system that suggests corrections in real-time as
 
 - If you misspell a word, the system suggests up to 7 possible corrections based on how close the word is to others in the dictionary.
 
-> You can load any dictionary file, for me I used this one [1000 English word](https://github.com/first20hours/google-10000-english/blob/master/google-10000-english.txt)
+> You can load any dictionary file, for me I used this one [10000 English word](https://github.com/first20hours/google-10000-english/blob/master/google-10000-english.txt)
 
 Here's the guide to activiate it
 
