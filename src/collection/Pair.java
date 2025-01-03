@@ -20,6 +20,4 @@ public class Pair<K, V> {
     public String toString() {
         return "(" + key + ", " + value + ")";
     }
-
-    // You might also want to override equals() and hashCode() for proper usage in collections
 }

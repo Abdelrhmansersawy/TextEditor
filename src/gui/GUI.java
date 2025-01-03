@@ -2,11 +2,12 @@ package gui;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import text.*;
-
+import service.SpellChecker;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Vector;
+import java.util.*;
 
 public class GUI extends javax.swing.JFrame{
 
@@ -15,6 +16,7 @@ public class GUI extends javax.swing.JFrame{
 
     public Color Transparent = new Color(0,0,0,0);
     public GUI(){
+        spellChecker = new SpellChecker();
         this.setWindow();
         this.setMenuBar();
         tabs = new Vector<>();
@@ -149,9 +151,99 @@ public class GUI extends javax.swing.JFrame{
         aboutMenu.setText("About");
         menuBar.add(aboutMenu);
 
+        spellCheckItem = new JMenuItem();
+        spellCheckItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
+        spellCheckItem.setText("Spell Check");
+        spellCheckItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                spellCheckItemActionPerformed(evt);
+            }
+        });
+        editMenu.add(spellCheckItem);
+
         setJMenuBar(menuBar);
 
     }
+
+    // In GUI.java - Update the spellCheckItemActionPerformed method
+
+    // In GUI.java - Update the spellCheckItemActionPerformed method
+
+    private void spellCheckItemActionPerformed(ActionEvent evt) {
+        if (tabs.isEmpty()) return;
+
+        TextManagement currentTab = tabs.elementAt(getIndex());
+        String selectedText = currentTab.textArea.getSelectedText();
+
+        // Check if text is selected
+        if (selectedText == null || selectedText.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Please select a word to check.",
+                    "Spell Check",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        // Clean and validate the selected word by taking only the first word if multiple words are selected
+        String[] words = selectedText.trim().split("\\s+");
+        String word = words[0].replaceAll("[^a-zA-Z]", "");
+
+        if (word.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Please select a single word containing only letters.",
+                    "Spell Check",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        // Get suggestions from spell checker
+        ArrayList<String> suggestions = (ArrayList<String>) spellChecker.getSuggestions(word);
+
+        // Handle case when word is correct or no suggestions found
+        if (suggestions.isEmpty() || (suggestions.size() == 1 && suggestions.get(0).equals(word))) {
+            String message = "The word '" + word + "' is ";
+            if (suggestions.size() == 1 && suggestions.get(0).equals(word)) {
+                message += "correctly spelled.";
+                JOptionPane.showMessageDialog(this,
+                        message,
+                        "Spell Check",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                message = "Word not found. Add '" + word + "' to dictionary?";
+                int option = JOptionPane.showConfirmDialog(this,
+                        message,
+                        "Spell Check",
+                        JOptionPane.YES_NO_OPTION);
+                if (option == JOptionPane.YES_OPTION) {
+                    spellChecker.learnWord(word);
+                }
+            }
+            return;
+        }
+
+        // Show suggestion dialog with top 5 matches
+        String[] options = suggestions.toArray(new String[0]);
+        String message = "Suggestions for '" + word + "':";
+        int choice = JOptionPane.showOptionDialog(this,
+                message,
+                "Spell Check",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+        // Handle user's choice
+        if (choice >= 0 && choice < suggestions.size()) {
+            String replacement = suggestions.get(choice);
+            // Replace only the first word if multiple words were selected
+            int endOfFirstWord = currentTab.textArea.getSelectionStart() + words[0].length();
+            currentTab.textArea.replaceRange(replacement,
+                    currentTab.textArea.getSelectionStart(),
+                    endOfFirstWord);
+        }
+    }
+
     void setFindBar(){
         findBar = new JPanel();
         findBarText = new JTextField(20);
@@ -213,6 +305,8 @@ public class GUI extends javax.swing.JFrame{
             }
         });
 
+
+
         // Create a panel to hold the tab title and close button
         JPanel tabTitlePanel = new JPanel();
 
@@ -221,6 +315,7 @@ public class GUI extends javax.swing.JFrame{
         tabTitlePanel.setBackground(Transparent);
         // Add the panel to the tab
         tabbedPane.addTab(title, panel);
+
         tabbedPane.setTabComponentAt(tabs.size() - 1, tabTitlePanel);
     }
     private int getIndex(){
@@ -310,7 +405,8 @@ public class GUI extends javax.swing.JFrame{
     private JPanel findBar;
     private JTextField findBarText, replaceBarText;
     private JButton replaceButton, replaceAllButton;
-
+    private JMenuItem spellCheckItem;
+    private SpellChecker spellChecker;
     private JButton findBarCloseButton;
     Vector<TextManagement> tabs;
 

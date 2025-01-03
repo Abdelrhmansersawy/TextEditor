@@ -19,25 +19,23 @@ A feature-rich GUI plaintext editor written in Java Swing.
 - Find and replace capabilities
 - Auto-save functionality
 
-## Installation
+## Installation & Usage
 
-1. Clone the repository
-  
-  ```bash
-  git clone https://github.com/yourusername/TextEditor.git
-  ```
-  
-2. Ensure you have Java JDK 8 or higher installed
-3. Import the project into your preferred IDE
+Ensure you have Java Development Kit (JDK) installed
 
-## Usage
-
-Run the `Main.java` file in your IDE or compile and run from command line:
+**Create output directory and compile**
 
 ```bash
-javac Main.java
-java Main
+mkdir -p out && javac -cp "library/*:src" src/**/*.java -d out
 ```
+
+**Run the application**
+
+```bash
+java -cp "out:library/*" Main
+```
+
+# 
 
 ## Core Features
 
@@ -47,12 +45,12 @@ java Main
 <summary>Create, Open, and Save Documents</summary>
 
 - Open files using the **"Open"** menu item and select through the file chooser dialog
+
 - Save files using the **"Save"** menu item with automatic overwrite protection
   ![ScreenShot](ScreenShots/openfile.gif)
   ![ScreenShot](ScreenShots/savefile.gif)
   
   </details>
-  
 
 <details>
 <summary>Multi-Tab Support</summary>
@@ -63,6 +61,26 @@ Work with multiple documents simultaneously
 </details>
 
 ### Advanced Features
+
+#### Spell Checker
+
+Creating a smart spell-checking system that suggests corrections in real-time as you type. Here’s how it works:
+ Dictionary Management:
+
+- The system starts by loading a list of words from a dictionary file. If the file isn’t available, it uses a basic set of common words.
+
+- As you type new words, the system "learns" them and adds them to the dictionary, making it smarter over time.
+  Suggestions:
+
+- If you misspell a word, the system suggests up to 7 possible corrections based on how close the word is to others in the dictionary.
+
+> You can load any dictionary file, for me I used this one [1000 English word](https://github.com/first20hours/google-10000-english/blob/master/google-10000-english.txt)
+
+Here's the guide to activiate it
+
+1. Download [google-10000-english.txt](https://github.com/first20hours/google-10000-english/blob/master/google-10000-english.txt)
+
+2. Move it to your project directory and put it into /library/
 
 <details>
 <summary>Find and Replace</summary>
@@ -103,6 +121,7 @@ A specialized data structure for efficient string manipulation with O(log n) ope
 
 > [!NOTE]
 > The Rope data structure implementation is based on Treap data structure for balanced operations.
+
 #### Implementation Details
 
 - Based on Treap (Balanced Binary Search Tree)
@@ -125,4 +144,3 @@ A specialized data structure for efficient string manipulation with O(log n) ope
 5. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 6. Push to the branch (`git push origin feature/AmazingFeature`)
 7. Create a Pull Request
-
